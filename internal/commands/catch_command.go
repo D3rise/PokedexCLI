@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/D3rise/pokedexcli/internal/context"
 	"github.com/D3rise/pokedexcli/internal/pokedex"
-	"github.com/D3rise/pokedexcli/pokedexapi"
+	"github.com/D3rise/pokedexcli/pokeapi"
 	"math/rand"
 	"time"
 )
@@ -19,7 +19,7 @@ var catchCommandMeta = cliCommand{
 }
 
 func catchCommand(c *context.Context, args ...string) error {
-	api := c.Get(pokedexapi.PokedexApiContextKey).(*pokedexapi.PokedexAPI)
+	api := c.Get(pokeapi.PokeApiContextKey).(*pokeapi.PokeAPI)
 	dex := c.Get(pokedex.PokedexContextKey).(*pokedex.Pokedex)
 
 	pokemonIdOrName := args[0]

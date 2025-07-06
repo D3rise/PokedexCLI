@@ -26,5 +26,6 @@ func InitializeRegistry() {
 		"explore": exploreCommandMeta,
 		"catch":   catchCommandMeta,
 		"inspect": inspectCommandMeta,
+		"pokedex": pokedexCommandMeta,
 	}
 }

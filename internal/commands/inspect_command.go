@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/D3rise/pokedexcli/internal/context"
 	"github.com/D3rise/pokedexcli/internal/pokedex"
-	"github.com/D3rise/pokedexcli/pokedexapi"
+	"github.com/D3rise/pokedexcli/pokeapi"
 )
 
 var inspectCommandMeta = cliCommand{
@@ -19,11 +19,12 @@ var inspectCommandMeta = cliCommand{
 func inspectCommand(c *context.Context, args ...string) error {
 	pokemonName := args[0]
 
-	api := c.Get(pokedexapi.PokedexApiContextKey).(*pokedexapi.PokedexAPI)
+	api := c.Get(pokeapi.PokeApiContextKey).(*pokeapi.PokeAPI)
 	dex := c.Get(pokedex.PokedexContextKey).(*pokedex.Pokedex)
 
-	if _, isInDex := dex.GetCaughtPokemons()[pokemonName]; !isInDex {
-		fmt.Println("This pokemon is not in your pokedex yet!\nCatch it using `catch` command, then try again.")
+	if _, isInDex := dex.GetPokemon(pokemonName); !isInDex {
+		fmt.Println("This pokemon is not in your pokedex yet!")
+		fmt.Println("Catch it using `catch` command, then try again.")
 		return nil
 	}
 

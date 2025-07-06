@@ -27,7 +27,15 @@ func (p *Pokedex) AddNewPokemon(name string) {
 	p.mu.Lock()
 	defer p.mu.Unlock()
 
-	p.caughtPokemons[name] = Pokemon{}
+	p.caughtPokemons[name] = Pokemon{Name: name}
+}
+
+func (p *Pokedex) GetPokemon(name string) (pokemon Pokemon, ok bool) {
+	p.mu.RLock()
+	defer p.mu.RUnlock()
+
+	pokemon, ok = p.caughtPokemons[name]
+	return
 }
 
 func (p *Pokedex) GetCaughtPokemons() map[string]Pokemon {

@@ -6,7 +6,7 @@ import (
 	"github.com/D3rise/pokedexcli/internal/commands"
 	"github.com/D3rise/pokedexcli/internal/context"
 	"github.com/D3rise/pokedexcli/internal/pokedex"
-	"github.com/D3rise/pokedexcli/pokedexapi"
+	"github.com/D3rise/pokedexcli/pokeapi"
 	"log"
 	"os"
 	"strings"
@@ -50,7 +50,7 @@ func repl() {
 }
 
 func initializeContext(c *context.Context) {
-	c.Set(pokedexapi.PokedexApiContextKey, pokedexapi.NewPokedexAPI(""))
+	c.Set(pokeapi.PokeApiContextKey, pokeapi.NewPokeAPI(""))
 	c.Set(pokedex.PokedexContextKey, pokedex.NewPokedex())
 }
 

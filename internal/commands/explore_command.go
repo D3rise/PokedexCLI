@@ -3,7 +3,7 @@ package commands
 import (
 	"fmt"
 	"github.com/D3rise/pokedexcli/internal/context"
-	"github.com/D3rise/pokedexcli/pokedexapi"
+	"github.com/D3rise/pokedexcli/pokeapi"
 )
 
 var exploreCommandMeta = cliCommand{
@@ -14,7 +14,7 @@ var exploreCommandMeta = cliCommand{
 }
 
 func exploreCommand(c *context.Context, args ...string) error {
-	api := c.Get(pokedexapi.PokedexApiContextKey).(*pokedexapi.PokedexAPI)
+	api := c.Get(pokeapi.PokeApiContextKey).(*pokeapi.PokeAPI)
 
 	areaName := args[0]
 	fmt.Printf("Exploring %s...\n", areaName)

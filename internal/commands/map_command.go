@@ -2,7 +2,7 @@ package commands
 
 import (
 	"fmt"
-	"github.com/D3rise/pokedexcli/pokedexapi"
+	"github.com/D3rise/pokedexcli/pokeapi"
 	"log"
 
 	"github.com/D3rise/pokedexcli/internal/context"
@@ -18,7 +18,7 @@ var mapCommandMeta = cliCommand{
 const mapNextOffset context.ContextKey = "mapNextOffset"
 
 func mapCommand(c *context.Context, _ ...string) error {
-	api, ok := c.Get(pokedexapi.PokedexApiContextKey).(*pokedexapi.PokedexAPI)
+	api, ok := c.Get(pokeapi.PokeApiContextKey).(*pokeapi.PokeAPI)
 
 	if !ok {
 		log.Fatal("pokedex api is not initialized")

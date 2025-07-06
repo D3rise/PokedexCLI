@@ -1,10 +1,10 @@
-package pokedexapi
+package pokeapi
 
 import (
 	"errors"
 	"fmt"
 	"github.com/D3rise/pokedexcli/internal/context"
-	"github.com/D3rise/pokedexcli/pokedexapi/responses"
+	"github.com/D3rise/pokedexcli/pokeapi/responses"
 	"net/http"
 	"time"
 
@@ -13,45 +13,45 @@ import (
 )
 
 const (
-	defaultPokedexApiEndpoint = "https://pokeapi.co/api/v2/"
-	locationAreaEndpoint      = "location-area/"
-	pokemonEndpoint           = "pokemon/"
+	defaultPokeApiEndpoint = "https://pokeapi.co/api/v2/"
+	locationAreaEndpoint   = "location-area/"
+	pokemonEndpoint        = "pokemon/"
 )
 
-const PokedexApiContextKey context.ContextKey = "_PokedexApiContextKey"
+const PokeApiContextKey context.ContextKey = "_PokeApiContextKey"
 
-type PokedexAPI struct {
+type PokeAPI struct {
 	apiEndpoint string
 	cache       *cache.Cache
 }
 
-func NewPokedexAPI(apiEndpoint string) *PokedexAPI {
+func NewPokeAPI(apiEndpoint string) *PokeAPI {
 	var endpoint string
 	if apiEndpoint == "" {
-		endpoint = defaultPokedexApiEndpoint
+		endpoint = defaultPokeApiEndpoint
 	} else {
 		endpoint = apiEndpoint
 	}
 
 	c := cache.NewCache(10 * time.Second)
 
-	return &PokedexAPI{
+	return &PokeAPI{
 		apiEndpoint: endpoint,
 		cache:       c,
 	}
 }
 
-func (p *PokedexAPI) GetPokemonInfo(idOrName string) (responses.PokemonInfoResponse, error) {
+func (p *PokeAPI) GetPokemonInfo(idOrName string) (responses.PokemonInfoResponse, error) {
 	url := p.apiEndpoint + pokemonEndpoint + idOrName
 	return getUsingCacheOrRequest[responses.PokemonInfoResponse](url, p.cache)
 }
 
-func (p *PokedexAPI) GetLocationAreaInfo(areaName string) (responses.LocationAreaInfoResponse, error) {
+func (p *PokeAPI) GetLocationAreaInfo(areaName string) (responses.LocationAreaInfoResponse, error) {
 	url := p.apiEndpoint + locationAreaEndpoint + areaName
 	return getUsingCacheOrRequest[responses.LocationAreaInfoResponse](url, p.cache)
 }
 
-func (p *PokedexAPI) GetLocationAreaList(limit int, offset int) (responses.LocationAreaListResponse, error) {
+func (p *PokeAPI) GetLocationAreaList(limit int, offset int) (responses.LocationAreaListResponse, error) {
 	url := p.apiEndpoint + locationAreaEndpoint + fmt.Sprintf("?limit=%d&offset=%d", limit, offset)
 	return getUsingCacheOrRequest[responses.LocationAreaListResponse](url, p.cache)
 }
