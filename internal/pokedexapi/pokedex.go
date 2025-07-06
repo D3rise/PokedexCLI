@@ -2,7 +2,6 @@ package pokedexapi
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/D3rise/pokedexcli/internal/pokecache"
@@ -40,10 +39,8 @@ func (p *PokedexAPI) GetLocationAreaList(limit int, offset int) (responses.Locat
 	var err error
 
 	if cached, ok := (*p).cache.Get(url); ok {
-		log.Println("USING CACHE")
 		body = cached
 	} else {
-		log.Println("NOT USING CACHE")
 		body, err = requests.Get(url)
 		if err != nil {
 			return *new(responses.LocationAreaListResponse), err
