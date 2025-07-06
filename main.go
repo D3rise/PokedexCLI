@@ -5,17 +5,28 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/D3rise/pokedexcli/commands"
 )
 
-const POKEDEX_PROMPT = "Pokedex > "
+const (
+	POKEDEX_PROMPT = "Pokedex > "
+	POKEDEX_MOTD   = "Welcome to the Pokedex!"
+)
 
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
+	registry := commands.GetCommandRegistry()
 
+	fmt.Println(POKEDEX_MOTD)
 	fmt.Print(POKEDEX_PROMPT)
 	for scanner.Scan() {
 		text := scanner.Text()
-		fmt.Println("Your command was:", cleanInput(text)[0])
+		if c, ok := registry[text]; ok {
+			c.Callback()
+		} else {
+			fmt.Println("Unknown command")
+		}
 		fmt.Print(POKEDEX_PROMPT)
 	}
 }
