@@ -6,9 +6,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/D3rise/pokedexcli/api"
 	"github.com/D3rise/pokedexcli/commands"
 	"github.com/D3rise/pokedexcli/context"
+	"github.com/D3rise/pokedexcli/pokedexapi"
 )
 
 const (
@@ -37,7 +37,7 @@ func main() {
 }
 
 func initializeContext(c *context.Context) {
-	c.Set(context.PokedexAPI, api.NewPokedexAPI(""))
+	c.Set(context.PokedexAPI, pokedexapi.NewPokedexAPI(""))
 }
 
 func cleanInput(text string) []string {

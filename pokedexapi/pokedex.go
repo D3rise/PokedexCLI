@@ -1,9 +1,10 @@
-package api
+package pokedexapi
 
 import (
 	"fmt"
 
-	"github.com/D3rise/pokedexcli/api/responses"
+	"github.com/D3rise/pokedexcli/pokedexapi/responses"
+	"github.com/D3rise/pokedexcli/requests"
 )
 
 const DEFAULT_POKEDEX_API_ENDPOINT = "https://pokeapi.co/api/v2/"
@@ -26,7 +27,7 @@ func NewPokedexAPI(apiEndpoint string) *PokedexAPI {
 }
 
 func (p PokedexAPI) GetLocationAreaList(limit int, offset int) (responses.LocationAreaListResponse, error) {
-	res, err := GetAndUnmarshal[responses.LocationAreaListResponse](p.apiEndpoint + LOCATION_AREA_ENDPOINT + fmt.Sprintf("?limit=%d&offset=%d", limit, offset))
+	res, err := requests.GetAndUnmarshal[responses.LocationAreaListResponse](p.apiEndpoint + LOCATION_AREA_ENDPOINT + fmt.Sprintf("?limit=%d&offset=%d", limit, offset))
 	if err != nil {
 		return *new(responses.LocationAreaListResponse), err
 	}
