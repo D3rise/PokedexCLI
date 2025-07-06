@@ -2,7 +2,7 @@ package commands
 
 import "github.com/D3rise/pokedexcli/internal/context"
 
-type cliCommandCallback func(*context.Context) error
+type cliCommandCallback func(ctx *context.Context, args ...string) error
 
 type cliCommand struct {
 	Name        string

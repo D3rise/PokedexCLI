@@ -10,7 +10,7 @@ import (
 
 const mapNextOffset context.ContextKey = "mapNextOffset"
 
-func mapCommand(c *context.Context) error {
+func mapCommand(c *context.Context, _ ...string) error {
 	api, ok := c.Get(context.PokedexAPI).(*pokedexapi.PokedexAPI)
 
 	if !ok {

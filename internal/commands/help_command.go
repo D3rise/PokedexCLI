@@ -6,7 +6,7 @@ import (
 	"github.com/D3rise/pokedexcli/internal/context"
 )
 
-func helpCommand(_ *context.Context) error {
+func helpCommand(_ *context.Context, _ ...string) error {
 	registry := GetCommandRegistry()
 
 	fmt.Print("Usage: \n\n")

@@ -7,7 +7,7 @@ import (
 	"github.com/D3rise/pokedexcli/internal/context"
 )
 
-func exitCommand(_ *context.Context) error {
+func exitCommand(_ *context.Context, _ ...string) error {
 	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil
