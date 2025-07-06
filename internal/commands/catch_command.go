@@ -44,5 +44,6 @@ func catchCommand(c *context.Context, args ...string) error {
 	}
 
 	dex.AddNewPokemon(pokemon.Name)
+	fmt.Println("Nice! It got caught! Congratulations, new Pokemon is in your Pokedex now.")
 	return nil
 }

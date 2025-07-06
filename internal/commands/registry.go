@@ -25,5 +25,6 @@ func InitializeRegistry() {
 		"mapb":    mapbCommandMeta,
 		"explore": exploreCommandMeta,
 		"catch":   catchCommandMeta,
+		"inspect": inspectCommandMeta,
 	}
 }
