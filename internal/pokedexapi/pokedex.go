@@ -2,7 +2,10 @@ package pokedexapi
 
 import (
 	"fmt"
+	"log"
+	"time"
 
+	"github.com/D3rise/pokedexcli/internal/pokecache"
 	"github.com/D3rise/pokedexcli/internal/pokedexapi/responses"
 	"github.com/D3rise/pokedexcli/internal/requests"
 )
@@ -12,22 +15,44 @@ const LOCATION_AREA_ENDPOINT = "location-area/"
 
 type PokedexAPI struct {
 	apiEndpoint string
+	cache       *pokecache.Cache
 }
 
 func NewPokedexAPI(apiEndpoint string) *PokedexAPI {
+	var endpoint string
 	if apiEndpoint == "" {
-		return &PokedexAPI{
-			apiEndpoint: DEFAULT_POKEDEX_API_ENDPOINT,
-		}
+		endpoint = DEFAULT_POKEDEX_API_ENDPOINT
 	} else {
-		return &PokedexAPI{
-			apiEndpoint: apiEndpoint,
-		}
+		endpoint = apiEndpoint
+	}
+
+	cache := pokecache.NewCache(5 * time.Second)
+
+	return &PokedexAPI{
+		apiEndpoint: endpoint,
+		cache:       cache,
 	}
 }
 
-func (p PokedexAPI) GetLocationAreaList(limit int, offset int) (responses.LocationAreaListResponse, error) {
-	res, err := requests.GetAndUnmarshal[responses.LocationAreaListResponse](p.apiEndpoint + LOCATION_AREA_ENDPOINT + fmt.Sprintf("?limit=%d&offset=%d", limit, offset))
+func (p *PokedexAPI) GetLocationAreaList(limit int, offset int) (responses.LocationAreaListResponse, error) {
+	url := p.apiEndpoint + LOCATION_AREA_ENDPOINT + fmt.Sprintf("?limit=%d&offset=%d", limit, offset)
+	var body []byte
+	var err error
+
+	if cached, ok := (*p).cache.Get(url); ok {
+		log.Println("USING CACHE")
+		body = cached
+	} else {
+		log.Println("NOT USING CACHE")
+		body, err = requests.Get(url)
+		if err != nil {
+			return *new(responses.LocationAreaListResponse), err
+		}
+
+		(*p).cache.Add(url, body)
+	}
+
+	res, err := requests.UnmarshalBody[responses.LocationAreaListResponse](body)
 	if err != nil {
 		return *new(responses.LocationAreaListResponse), err
 	}
