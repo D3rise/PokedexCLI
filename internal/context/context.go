@@ -7,10 +7,6 @@ import (
 
 type ContextKey string
 
-const (
-	PokedexAPI ContextKey = "PokedexAPI"
-)
-
 type Context struct {
 	mu sync.RWMutex
 	kv map[ContextKey]any

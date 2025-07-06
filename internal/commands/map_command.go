@@ -18,7 +18,7 @@ var mapCommandMeta = cliCommand{
 const mapNextOffset context.ContextKey = "mapNextOffset"
 
 func mapCommand(c *context.Context, _ ...string) error {
-	api, ok := c.Get(context.PokedexAPI).(*pokedexapi.PokedexAPI)
+	api, ok := c.Get(pokedexapi.PokedexApiContextKey).(*pokedexapi.PokedexAPI)
 
 	if !ok {
 		log.Fatal("pokedex api is not initialized")

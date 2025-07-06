@@ -24,5 +24,6 @@ func InitializeRegistry() {
 		"map":     mapCommandMeta,
 		"mapb":    mapbCommandMeta,
 		"explore": exploreCommandMeta,
+		"catch":   catchCommandMeta,
 	}
 }

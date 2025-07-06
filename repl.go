@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/D3rise/pokedexcli/internal/commands"
 	"github.com/D3rise/pokedexcli/internal/context"
+	"github.com/D3rise/pokedexcli/internal/pokedex"
 	"github.com/D3rise/pokedexcli/pokedexapi"
 	"log"
 	"os"
@@ -12,8 +13,8 @@ import (
 )
 
 const (
-	POKEDEX_PROMPT = "Pokedex > "
-	POKEDEX_MOTD   = "Welcome to the Pokedex!"
+	PokedexPrompt = "Pokedex > "
+	PokedexMotd   = "Welcome to the Pokedex!"
 )
 
 func repl() {
@@ -23,29 +24,34 @@ func repl() {
 	ctx := context.NewContext()
 	initializeContext(ctx)
 
-	fmt.Println(POKEDEX_MOTD)
-	fmt.Print(POKEDEX_PROMPT)
+	fmt.Println(PokedexMotd)
+	fmt.Print(PokedexPrompt)
 	for scanner.Scan() {
-		text := cleanInput(scanner.Text())
-		if len(text) == 0 {
-			fmt.Print(POKEDEX_PROMPT)
+		input := cleanInput(scanner.Text())
+		if len(input) == 0 {
+			fmt.Print(PokedexPrompt)
 			continue
 		}
 
-		if c, ok := registry[text[0]]; ok {
-			err := c.Callback(ctx, text[1:]...)
+		cmd := input[0]
+		args := input[1:]
+
+		if c, ok := registry[cmd]; ok && len(args) == len(c.Args) {
+			err := c.Callback(ctx, args...)
 			if err != nil {
 				log.Fatal(err)
 			}
 		} else {
-			fmt.Println("Unknown command")
+			fmt.Println("Unknown command or wrong number of arguments.")
 		}
-		fmt.Print(POKEDEX_PROMPT)
+
+		fmt.Print(PokedexPrompt)
 	}
 }
 
 func initializeContext(c *context.Context) {
-	c.Set(context.PokedexAPI, pokedexapi.NewPokedexAPI(""))
+	c.Set(pokedexapi.PokedexApiContextKey, pokedexapi.NewPokedexAPI(""))
+	c.Set(pokedex.PokedexContextKey, pokedex.NewPokedex())
 }
 
 func cleanInput(text string) []string {

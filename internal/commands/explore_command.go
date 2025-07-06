@@ -14,7 +14,7 @@ var exploreCommandMeta = cliCommand{
 }
 
 func exploreCommand(c *context.Context, args ...string) error {
-	api := c.Get(context.PokedexAPI).(*pokedexapi.PokedexAPI)
+	api := c.Get(pokedexapi.PokedexApiContextKey).(*pokedexapi.PokedexAPI)
 
 	areaName := args[0]
 	fmt.Printf("Exploring %s...\n", areaName)

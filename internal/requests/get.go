@@ -1,30 +1,25 @@
 package requests
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 )
 
-func Get(url string) ([]byte, error) {
-	res, err := http.Get(url)
+func Get(url string) (res *http.Response, body []byte, err error) {
+	res, err = http.Get(url)
 	if err != nil {
-		return []byte{}, err
+		return nil, nil, err
 	}
 
-	body, err := io.ReadAll(res.Body)
+	body, err = io.ReadAll(res.Body)
 	if err != nil {
-		return []byte{}, err
+		return nil, nil, err
 	}
 
 	err = res.Body.Close()
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	if res.StatusCode > 299 {
-		return []byte{}, fmt.Errorf("errornous status code from GET request: %d", res.StatusCode)
-	}
-
-	return body, nil
+	return res, body, nil
 }
