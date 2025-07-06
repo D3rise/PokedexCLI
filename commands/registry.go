@@ -1,6 +1,8 @@
 package commands
 
-type cliCommandCallback func() error
+import "github.com/D3rise/pokedexcli/context"
+
+type cliCommandCallback func(*context.Context) error
 
 type cliCommand struct {
 	Name        string

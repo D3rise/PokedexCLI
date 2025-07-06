@@ -1,8 +1,12 @@
 package commands
 
-import "fmt"
+import (
+	"fmt"
 
-func helpCommand() error {
+	"github.com/D3rise/pokedexcli/context"
+)
+
+func helpCommand(_ *context.Context) error {
 	registry := GetCommandRegistry()
 
 	fmt.Print("Usage: \n\n")

@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/D3rise/pokedexcli/commands"
+	"github.com/D3rise/pokedexcli/context"
 )
 
 const (
@@ -17,13 +18,14 @@ const (
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	registry := commands.GetCommandRegistry()
+	context := context.NewContext()
 
 	fmt.Println(POKEDEX_MOTD)
 	fmt.Print(POKEDEX_PROMPT)
 	for scanner.Scan() {
 		text := scanner.Text()
 		if c, ok := registry[text]; ok {
-			c.Callback()
+			c.Callback(context)
 		} else {
 			fmt.Println("Unknown command")
 		}
