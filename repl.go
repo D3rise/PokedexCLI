@@ -33,7 +33,7 @@ func repl() {
 		}
 
 		if c, ok := registry[text[0]]; ok {
-			err := c.Callback(ctx)
+			err := c.Callback(ctx, text[1:]...)
 			if err != nil {
 				log.Fatal(err)
 			}

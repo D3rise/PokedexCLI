@@ -25,7 +25,7 @@ func NewPokedexAPI(apiEndpoint string) *PokedexAPI {
 		endpoint = apiEndpoint
 	}
 
-	cache := pokecache.NewCache(5 * time.Second)
+	cache := pokecache.NewCache(10 * time.Second)
 
 	return &PokedexAPI{
 		apiEndpoint: endpoint,
@@ -33,26 +33,35 @@ func NewPokedexAPI(apiEndpoint string) *PokedexAPI {
 	}
 }
 
+func (p *PokedexAPI) GetLocationAreaInfo(areaName string) (responses.LocationAreaInfoResponse, error) {
+	url := p.apiEndpoint + LOCATION_AREA_ENDPOINT + areaName
+	return getUsingCacheOrRequest[responses.LocationAreaInfoResponse](url, (*p).cache)
+}
+
 func (p *PokedexAPI) GetLocationAreaList(limit int, offset int) (responses.LocationAreaListResponse, error) {
 	url := p.apiEndpoint + LOCATION_AREA_ENDPOINT + fmt.Sprintf("?limit=%d&offset=%d", limit, offset)
+	return getUsingCacheOrRequest[responses.LocationAreaListResponse](url, (*p).cache)
+}
+
+func getUsingCacheOrRequest[T any](url string, cache *pokecache.Cache) (T, error) {
 	var body []byte
 	var err error
 
-	if cached, ok := (*p).cache.Get(url); ok {
+	if cached, ok := (*cache).Get(url); ok {
 		body = cached
 	} else {
 		body, err = requests.Get(url)
 		if err != nil {
-			return *new(responses.LocationAreaListResponse), err
+			return *new(T), err
 		}
 
-		(*p).cache.Add(url, body)
+		(*cache).Add(url, body)
 	}
 
-	res, err := requests.UnmarshalBody[responses.LocationAreaListResponse](body)
+	result, err := requests.UnmarshalBody[T](body)
 	if err != nil {
-		return *new(responses.LocationAreaListResponse), err
+		return *new(T), err
 	}
 
-	return res, nil
+	return result, nil
 }

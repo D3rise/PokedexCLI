@@ -8,6 +8,13 @@ import (
 	"github.com/D3rise/pokedexcli/internal/context"
 )
 
+var mapCommandMeta = cliCommand{
+	Name:        "map",
+	Args:        []string{},
+	Description: "Print locations, each usage increases offset by 20",
+	Callback:    mapCommand,
+}
+
 const mapNextOffset context.ContextKey = "mapNextOffset"
 
 func mapCommand(c *context.Context, _ ...string) error {

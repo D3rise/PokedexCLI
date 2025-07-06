@@ -7,30 +7,22 @@ type cliCommandCallback func(ctx *context.Context, args ...string) error
 type cliCommand struct {
 	Name        string
 	Description string
+	Args        []string
 	Callback    cliCommandCallback
 }
 
+var commandRegistry map[string]cliCommand
+
 func GetCommandRegistry() map[string]cliCommand {
-	return map[string]cliCommand{
-		"exit": {
-			Name:        "exit",
-			Description: "Exit the Pokedex",
-			Callback:    exitCommand,
-		},
-		"help": {
-			Name:        "help",
-			Description: "Displays a help message",
-			Callback:    helpCommand,
-		},
-		"map": {
-			Name:        "map",
-			Description: "Print locations, each usage increases offset by 20",
-			Callback:    mapCommand,
-		},
-		"mapb": {
-			Name:        "mapb",
-			Description: "Print locations, each usage decreases offset by 20",
-			Callback:    mapbCommand,
-		},
+	return commandRegistry
+}
+
+func InitializeRegistry() {
+	commandRegistry = map[string]cliCommand{
+		"exit":    exitCommandMeta,
+		"help":    helpCommandMeta,
+		"map":     mapCommandMeta,
+		"mapb":    mapbCommandMeta,
+		"explore": exploreCommandMeta,
 	}
 }
