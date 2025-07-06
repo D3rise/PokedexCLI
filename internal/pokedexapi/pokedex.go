@@ -3,8 +3,8 @@ package pokedexapi
 import (
 	"fmt"
 
-	"github.com/D3rise/pokedexcli/pokedexapi/responses"
-	"github.com/D3rise/pokedexcli/requests"
+	"github.com/D3rise/pokedexcli/internal/pokedexapi/responses"
+	"github.com/D3rise/pokedexcli/internal/requests"
 )
 
 const DEFAULT_POKEDEX_API_ENDPOINT = "https://pokeapi.co/api/v2/"

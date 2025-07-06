@@ -3,7 +3,7 @@ package commands
 import (
 	"fmt"
 
-	"github.com/D3rise/pokedexcli/context"
+	"github.com/D3rise/pokedexcli/internal/context"
 )
 
 func helpCommand(_ *context.Context) error {

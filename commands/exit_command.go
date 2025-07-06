@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/D3rise/pokedexcli/context"
+	"github.com/D3rise/pokedexcli/internal/context"
 )
 
 func exitCommand(_ *context.Context) error {

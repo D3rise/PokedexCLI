@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/D3rise/pokedexcli/context"
-	"github.com/D3rise/pokedexcli/pokedexapi"
+	"github.com/D3rise/pokedexcli/internal/context"
+	"github.com/D3rise/pokedexcli/internal/pokedexapi"
 )
 
 const mapNextOffset context.ContextKey = "mapNextOffset"

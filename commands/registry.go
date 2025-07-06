@@ -1,6 +1,6 @@
 package commands
 
-import "github.com/D3rise/pokedexcli/context"
+import "github.com/D3rise/pokedexcli/internal/context"
 
 type cliCommandCallback func(*context.Context) error
 
