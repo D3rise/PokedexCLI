@@ -13,9 +13,13 @@ func Get(url string) ([]byte, error) {
 	}
 
 	body, err := io.ReadAll(res.Body)
-	res.Body.Close()
 	if err != nil {
 		return []byte{}, err
+	}
+
+	err = res.Body.Close()
+	if err != nil {
+		return nil, err
 	}
 
 	if res.StatusCode > 299 {

@@ -2,10 +2,10 @@ package pokedexapi
 
 import (
 	"fmt"
+	"github.com/D3rise/pokedexcli/pokedexapi/responses"
 	"time"
 
 	"github.com/D3rise/pokedexcli/internal/pokecache"
-	"github.com/D3rise/pokedexcli/internal/pokedexapi/responses"
 	"github.com/D3rise/pokedexcli/internal/requests"
 )
 

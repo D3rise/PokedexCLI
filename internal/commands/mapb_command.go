@@ -2,16 +2,16 @@ package commands
 
 import (
 	"fmt"
+	"github.com/D3rise/pokedexcli/pokedexapi"
 	"log"
 
 	"github.com/D3rise/pokedexcli/internal/context"
-	"github.com/D3rise/pokedexcli/internal/pokedexapi"
 )
 
 const mapPreviousOffset context.ContextKey = "mapPreviousOffset"
 
 func mapbCommand(c *context.Context) error {
-	pokedexapi, ok := c.Get(context.PokedexAPI).(*pokedexapi.PokedexAPI)
+	api, ok := c.Get(context.PokedexAPI).(*pokedexapi.PokedexAPI)
 
 	if !ok {
 		log.Fatal("pokedex api is not initialized")
@@ -26,7 +26,7 @@ func mapbCommand(c *context.Context) error {
 		offset = 0
 	}
 
-	result, err := pokedexapi.GetLocationAreaList(20, offset)
+	result, err := api.GetLocationAreaList(20, offset)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -3,12 +3,13 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/D3rise/pokedexcli/internal/commands"
+	"github.com/D3rise/pokedexcli/pokedexapi"
+	"log"
 	"os"
 	"strings"
 
-	"github.com/D3rise/pokedexcli/commands"
 	"github.com/D3rise/pokedexcli/internal/context"
-	"github.com/D3rise/pokedexcli/internal/pokedexapi"
 )
 
 const (
@@ -20,15 +21,18 @@ func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	registry := commands.GetCommandRegistry()
 
-	context := context.NewContext()
-	initializeContext(context)
+	ctx := context.NewContext()
+	initializeContext(ctx)
 
 	fmt.Println(POKEDEX_MOTD)
 	fmt.Print(POKEDEX_PROMPT)
 	for scanner.Scan() {
 		text := scanner.Text()
 		if c, ok := registry[text]; ok {
-			c.Callback(context)
+			err := c.Callback(ctx)
+			if err != nil {
+				log.Fatal(err)
+			}
 		} else {
 			fmt.Println("Unknown command")
 		}
