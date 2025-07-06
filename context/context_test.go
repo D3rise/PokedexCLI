@@ -10,24 +10,24 @@ func TestSet(t *testing.T) {
 
 	cases := []struct {
 		input struct {
-			key   string
+			key   ContextKey
 			value string
 		}
 		expected struct {
-			key   string
+			key   ContextKey
 			value string
 		}
 	}{
 		{
 			input: struct {
-				key   string
+				key   ContextKey
 				value string
 			}{
 				key:   "testKey",
 				value: "testValue",
 			},
 			expected: struct {
-				key   string
+				key   ContextKey
 				value string
 			}{
 				key:   "testKey",
@@ -36,14 +36,14 @@ func TestSet(t *testing.T) {
 		},
 		{
 			input: struct {
-				key   string
+				key   ContextKey
 				value string
 			}{
 				key:   "testKey",
 				value: "newTestValue",
 			},
 			expected: struct {
-				key   string
+				key   ContextKey
 				value string
 			}{
 				key:   "testKey",
@@ -66,7 +66,7 @@ func TestGet(t *testing.T) {
 	context.kv["testKey"] = "testValue"
 
 	cases := []struct {
-		input    string
+		input    ContextKey
 		expected any
 	}{
 		{
@@ -93,7 +93,7 @@ func TestDel(t *testing.T) {
 	context.kv["testKey"] = "testValue"
 
 	cases := []struct {
-		input            string
+		input            ContextKey
 		expected         any
 		expectedKeyValue any
 	}{

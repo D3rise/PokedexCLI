@@ -22,5 +22,15 @@ func GetCommandRegistry() map[string]cliCommand {
 			Description: "Displays a help message",
 			Callback:    helpCommand,
 		},
+		"map": {
+			Name:        "map",
+			Description: "Print locations, each usage increases offset by 20",
+			Callback:    mapCommand,
+		},
+		"mapb": {
+			Name:        "mapb",
+			Description: "Print locations, each usage decreases offset by 20",
+			Callback:    mapbCommand,
+		},
 	}
 }
